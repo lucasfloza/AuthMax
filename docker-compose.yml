@@ -4,7 +4,7 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: authMax_db
-    env_file: .env  # Carrega variáveis do .env
+    env_file: .env
     environment:
       POSTGRES_DB: ${POSTGRES_DATABASE}
       POSTGRES_USER: ${POSTGRES_USERNAME}
@@ -25,11 +25,16 @@ services:
     env_file: .env
     ports:
       - "8080:8080"
+      - "5005:5005"  # remoto port
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DATABASE}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SPRING_DEVTOOLS_REMOTE_SECRET: changeme  # Chave para hot reload
+    volumes:
+      - .:/app
+      - ~/.m2:/root/.m2
     depends_on:
       postgres:
         condition: service_healthy
@@ -38,7 +43,6 @@ services:
     image: redis:alpine
     ports:
       - "6379:6379"
-    # Adicione healthcheck para Redis também
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
