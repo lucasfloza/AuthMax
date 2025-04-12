@@ -31,3 +31,17 @@ build/
 
 ### VS Code ###
 .vscode/
+
+.env
+bin/
+*.jar
+*.war
+*.ear
+*.class
+.settings/
+.project
+.classpath
+.idea
+*.iml
+.DS_Store
+.git/

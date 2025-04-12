@@ -2,13 +2,10 @@ spring:
   application:
     name: "AuthMax"
   datasource:
-    url: jdbc:postgresql://postgres:5432/${POSTGRES_DATABASE}
-    username: ${POSTGRES_USERNAME}
-    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: senha123
     driver-class-name: org.postgresql.Driver
-  config:
-    import=optional:
-      file: .env
   jpa:
     hibernate:
       ddl-auto: update
@@ -21,3 +18,11 @@ spring:
   redis:
     host: redis
     port: 6379
+
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+    remote:
+      secret: changeme  # Mesmo valor definido no compose
